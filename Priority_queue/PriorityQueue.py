@@ -31,7 +31,7 @@ class PriorityQueue:
         if len(self.queue) == 0:
             self.queue.append(node)
         else:
-            # traverse the queue and find the right index base priority of the new node
+            # traverse the queue and find the right index based priority of the new node
             
             for x in range(0,len(self.queue)):
                 # if  new the node's priority is bigger or equal to current node, and it is end of the queue then add the new node to end of the queue
@@ -45,7 +45,7 @@ class PriorityQueue:
                         continue 
                         
                 else:
-                    # if current node is not bigger than add the new node in this index and push the current node to next position
+                    # if current node is not bigger than the new, then add the new node in this index and push the current node to next position
                     self.queue.insert(x,node)
                     return True
     # node with highest priority is deleted and removed from the queue

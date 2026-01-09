@@ -9,6 +9,9 @@
 - list is used to implement heap,each nodes children is stored in 2 * i and 2* i + 1 indices.
 -indices starts with one so there is dummy element is placed inside index zero.
 - root element of a heap is either min or max element.
+heap sort:
+add the values to heap and then traverse the heap and pop values from root, which will 
+give return values in accending order.
 '''
 
 
@@ -30,6 +33,7 @@ class Heap:
         self.arrange(self.size)
     #run time is O(1)
     def get_min(self):
+        
         return self.heap[1]
         
     # arrange function rearranges the heap from bottem to top so it meets the min/max requirment 
@@ -37,7 +41,7 @@ class Heap:
         # loop is used to swap until heap meets the requirment 
         while k// 2 > 0:
             if self.heap[k] < self.heap[k//2]:
-                # swap elements with it's parent if the parent is smaller than the current node
+                # swap elements with it's parent if the parent is bigger than the current node
                 self.heap[k],self.heap[k//2]= self.heap[k//2],self.heap[k]
             # index changes to parent node after the swap. moving up a tree after a swap
             k //= 2
@@ -59,20 +63,27 @@ class Heap:
         # loop to traverse down the tree
         while k * 2 <= self.size:
             min_child = self.minChild(k)
-            # swap parent with child if parnet is bigger than the min child
+            # swap parent with child if parenet is bigger than the min child
             if self.heap[k] > self.heap[min_child]:
                 self.heap[k],self.heap[min_child] = self.heap[min_child],self.heap[k]
             k = min_child
     
-    def delete_at_location(self,location):
+   def delete_at_location(self, location):
         item = self.heap[location]
         self.heap[location] = self.heap[self.size]
-        self.size -=1
+        self.size -= 1
         self.heap.pop()
-        # rearrange from the top to bottem after replacing last item with item to be deleted to keep heap property
-        self.sink(location)
+
+        if location <= self.size:  
+            parent = location // 2
+        # if parent is bigger than current then arrange else sink
+            if parent > 0 and self.heap[location] < self.heap[parent]:
+                self.arrange(location)  
+            else:
+                self.sink(location)     
+
         return item
-        
+
         
     # minchild function finds the child node with minium value
     
@@ -102,5 +113,26 @@ h1.delete_at_location(2)
 h1.print_items()
 
 # %%
+# heap sort
+# add values to the heap then pop the values one at at a time
+# then the values will be in accending order
+
+heap = Heap()
+values = [10,2,50,20,15,5,68,4]
+
+for i in range(len(values)):
+    heap.insert(values[i])
+
+
+
+
+
+
 # %%
-``
+heap.print_items()
+# %%
+sorted_values = []
+for i in range(heap.size):
+    sorted_values.append(heap.delete_at_root())
+print(sorted_values)
+# %%
